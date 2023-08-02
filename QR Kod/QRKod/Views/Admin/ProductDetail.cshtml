@@ -1,0 +1,80 @@
+﻿@using EntityLayer;
+@model Product
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2 class="col-11">Ürün Detayı</h2>
+<hr class="col-11"  />
+<br />
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<div style="margin-top: 40px;margin-bottom: 80px;margin-left:30px; " class="row">
+    <div class="col-md-3">
+
+        <img  src="@Model.ImageUrl" width="100%" height="500px" class="img-fluid">
+    </div>
+    <div class="col-md-9 mt-1">
+        <h3 class="class=" text-primary" style="color:cornflowerblue">
+            <p style="display:inline;font-size:18px;color:black">Ürün Adı:</p> @Model.Name
+        </h3> <hr>
+        <h4 style="color:cornflowerblue"><p style="display:inline;font-size:20px;color:black">Ürün Kategori:</p> @ViewBag.ctg</h4>
+        <div class="mb-5">
+   
+            <br />
+            <h4 style="color:cornflowerblue"> <p style="display:inline;font-size:20px;color:black">Ürün Açıklaması:</p> @Model.Description</h4>
+
+
+            <br />
+            <h4 style="color:darkblue">
+                <p style="display:inline;font-size:21px;color:black;">Ürün Fiyatı:</p>
+                @Model.Price  TL <i class="fa fa-turkish-lira" style="font-size:20px;"></i>
+            </h4>
+
+         
+                 <div style="margin-left:10px;" class="form-group row ml-2">
+                    <label  class="col-sm-2 col-form-label">Detay</label>
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(i=>i.Id,(List<SelectListItem>)ViewBag.Values,new{@class="form-control"})
+                    </div>
+                </div>
+
+            <form asp-controller="Admin" asp-action="AddDetails" method="POST">
+                <input class="form-control" name="productId" value="@Model.Id" type="hidden">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div style="margin-left:10px;" class="form-group row ml-2">
+                    <label asp-for="Name" class="col-sm-2 col-form-label">Detay Adı</label>
+                    <div class="col-sm-10">
+                        <input placeholder="Kaşar,Sucuk..." class="form-control" type="text" name="Ozellik" >
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <br /> <br />
+                </div>
+                <div style="margin-left:10px;" class="form-group row ml-2">
+                    <label asp-for="ImageUrl" class="col-sm-2 col-form-label">Fiyat</label>
+                    <div class="col-sm-10">
+                        <input placeholder="10 Tl, 20 Tl" class="form-control" name="Price">
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <br /> <br />
+                </div>
+                
+
+                <div class="form-group row">
+                    <div class="col-sm-12 offset-sm-2">
+                        <button type="submit" class="btn btn-outline-primary">Detay Kaydet</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <br />
+            <a href="/admin/UpdateProduct/@Model.Id" class="btn btn-warning btn-lg mr-3">Düzenle</a>
+            <a href="/admin/DeleteProduct/@Model.Id" class="btn btn-danger btn-lg">Sil</a>
+
+        </div>
+    </div>
+ </div>
